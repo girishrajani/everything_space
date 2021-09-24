@@ -1,4 +1,6 @@
+import 'package:everything_space/theme/themes.dart';
 import 'package:flutter/material.dart';
+import '../theme/themes.dart';
 
 void main() {
   runApp(const Home());
@@ -10,10 +12,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        brightness: Brightness.dark,
-      ),
+      theme: AppThemeData.darkTheme,
       home: const HomeScreen(),
     );
   }
