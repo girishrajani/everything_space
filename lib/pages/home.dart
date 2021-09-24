@@ -1,4 +1,5 @@
 import 'package:everything_space/theme/themes.dart';
+import 'package:everything_space/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import '../theme/themes.dart';
 
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: AppDrawer(),
       body: CustomScrollView(
         slivers: <Widget>[
           const SliverAppBar(
@@ -39,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('Everything Space'),
               background: Image(
                 fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://giffiles.alphacoders.com/211/211255.gif'),
+                image: AssetImage('assets/images/space.gif'),
               ),
             ),
           ),
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: MediaQuery.of(context).size.width,
                       height: 200,
                       child: const Center(
-                        child: Text('Hello'),
+                        child: Text('News Here'),
                       ),
                     ),
                   ),
