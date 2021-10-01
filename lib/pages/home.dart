@@ -1,5 +1,8 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
+import 'package:everything_space/api/news_api.dart';
 import 'package:flutter/material.dart';
 import '../theme/themes.dart';
 
@@ -28,6 +31,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    // print(res);
+    var a;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
@@ -35,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: <Widget>[
           const SliverAppBar(
             pinned: true,
-            expandedHeight: 260.0,
+            expandedHeight: 300.0,
             flexibleSpace: FlexibleSpaceBar(
               title: Text('Everything Space'),
               background: Image(
@@ -44,44 +54,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          // ListView(
-          //   children: [
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //     FlutterLogo(),
-          //   ],
-          // ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Card(
-                  margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(19),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      //On Tap Redirect
-                      //Navigator.push()
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 200,
-                      child: const Center(
-                        child: Text('News Here'),
-                      ),
+          FutureBuilder(
+              future: GetNews().getData(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                var _childCount = 1;
+                if (snapshot.hasData == null) {
+                  _childCount = 1;
+                  return CircularProgressIndicator();
+                } else {
+                  _childCount = 10;
+
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (snapshot.connectionState != ConnectionState.done) {
+                          return Container();
+                        }
+                        _childCount = 10;
+                        return Card(
+                          margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(19),
+                          ),
+                          child: Container(
+                            height: 300,
+                            child: Column(
+                              children: [
+                                Image(
+                                  image: NetworkImage(
+                                      snapshot.data[index].imageUrl),
+                                  height: 200,
+                                ),
+                                Text(snapshot.data[index].headline),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Read More'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: _childCount,
                     ),
-                  ),
-                );
-              },
-              childCount: 300,
-            ),
-          ),
+                  );
+                }
+              }),
         ],
       ),
     );
