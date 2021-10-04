@@ -1,5 +1,3 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
 import 'package:everything_space/api/news_api.dart';
@@ -77,18 +75,57 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(19),
                           ),
                           child: Container(
-                            height: 300,
+                            // height: 300,
                             child: Column(
                               children: [
-                                Image(
-                                  image: NetworkImage(
-                                      snapshot.data[index].imageUrl),
-                                  height: 200,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      snapshot.data[index].imageUrl,
+                                      fit: BoxFit.cover,
+                                      height: 200.0,
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
+                                    ),
+                                  ),
                                 ),
-                                Text(snapshot.data[index].headline),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text('Read More'),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    snapshot.data[index].headline,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          child: const Text(
+                                            'Read More',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.blueGrey),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
