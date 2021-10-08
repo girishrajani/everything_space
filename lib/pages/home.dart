@@ -3,6 +3,8 @@ import 'package:everything_space/widgets/drawer.dart';
 import 'package:everything_space/api/news_api.dart';
 import 'package:flutter/material.dart';
 import '../theme/themes.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void main() {
   runApp(const Home());
@@ -29,12 +31,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    // print(res);
-    var a;
-    super.initState();
-  }
-
+  void _launchURL(_url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,13 +81,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      snapshot.data[index].imageUrl,
+                                    child: CachedNetworkImage(
                                       fit: BoxFit.cover,
                                       height: 200.0,
                                       width: MediaQuery.of(context).size.width -
                                           100,
+                                      placeholder: (context, url) =>
+                                          const Padding(
+                                        padding: EdgeInsets.all(35.0),
+                                        child: CircularProgressIndicator(
+                                          color: Colors.blueGrey,
+                                        ),
+                                      ),
+                                      imageUrl: snapshot.data[index].imageUrl,
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
+                                    // child: Image.network(
+                                    //   snapshot.data[index].imageUrl,
+                                    //   fit: BoxFit.cover,
+                                    //   height: 200.0,
+                                    //   width: MediaQuery.of(context).size.width -
+                                    //       100,
+                                    // ),
                                   ),
                                 ),
                                 Padding(
@@ -109,7 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            _launchURL(
+                                                snapshot.data[index].url);
+                                          },
                                           child: const Text(
                                             'Read More',
                                             style: TextStyle(
