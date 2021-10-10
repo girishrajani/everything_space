@@ -1,5 +1,4 @@
 import 'package:everything_space/pages/apod.dart';
-import 'package:everything_space/pages/cosmoclub.dart';
 import 'package:everything_space/pages/home.dart';
 import 'package:everything_space/pages/iss.dart';
 import 'package:everything_space/pages/rover_images.dart';
@@ -98,10 +97,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CosmoClub()),
-              );
+              _launchUrls("https://cosmoclub.in");
             },
             leading: const Icon(
               Icons.wb_iridescent_outlined,
@@ -112,15 +108,18 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(
+            onTap: () {
+              _launchUrls("https://www.buymeacoffee.com/girishrajani");
+            },
+            leading: const Icon(
               Icons.monetization_on,
               color: Colors.white,
             ),
-            title: Text('Donate'),
+            title: const Text('Donate'),
           ),
           ListTile(
             onTap: () {
-              _launchIssuesUrl(
+              _launchUrls(
                   "https://github.com/girishrajani/everything_space/issues");
             },
             leading: const Icon(
@@ -134,7 +133,7 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  void _launchIssuesUrl(_url) async => await canLaunch(_url)
+  void _launchUrls(_url) async => await canLaunch(_url)
       ? await launch(_url)
       : throw 'Could not launch $_url';
 }
