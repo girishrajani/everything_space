@@ -3,6 +3,7 @@ import 'package:everything_space/pages/home.dart';
 import 'package:everything_space/pages/iss.dart';
 import 'package:everything_space/pages/rover_images.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
@@ -71,15 +72,21 @@ class AppDrawer extends StatelessWidget {
               'Internationl Space Station',
             ),
           ),
-          // ListTile(
-          //   leading: Icon(
-          //     Icons.edit_location_rounded,
-          //     color: Colors.white,
-          //   ),
-          //   title: Text(
-          //     'Tiangong Space Station',
-          //   ),
-          // ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ISS()),
+              );
+            },
+            leading: const Icon(
+              Icons.edit_location_rounded,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Tiangong Space Station',
+            ),
+          ),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -96,6 +103,21 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            // onTap: () {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => MarsRovers()),
+            //   );
+            // },
+            leading: const Icon(
+              Icons.scatter_plot_rounded,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'James Webb Space Telescope',
+            ),
+          ),
+          ListTile(
             onTap: () {
               _launchUrls("https://cosmoclub.in");
             },
@@ -105,6 +127,18 @@ class AppDrawer extends StatelessWidget {
             ),
             title: const Text(
               'CosmoClub',
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              _launchUrls("https://github.com/girishrajani/everything_space");
+            },
+            leading: const Icon(
+              Icons.smart_toy_rounded,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Contribute',
             ),
           ),
           ListTile(
@@ -127,6 +161,16 @@ class AppDrawer extends StatelessWidget {
               color: Colors.white,
             ),
             title: const Text('Report a Problem'),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Center(
+                child: Text(
+              'Powerd by CosmoClub',
+              style: TextStyle(
+                fontSize: 10,
+              ),
+            )),
           ),
         ],
       ),

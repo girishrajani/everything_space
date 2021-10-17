@@ -2,6 +2,7 @@ import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
 import 'package:everything_space/api/news_api.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 import '../theme/themes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -123,24 +124,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            _launchURL(
-                                                snapshot.data[index].url);
-                                          },
-                                          child: const Text(
-                                            'Read More',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.blueGrey),
-                                          ),
-                                        ),
+                                        child: Link(
+                                            target: LinkTarget.self,
+                                            uri: Uri.parse(
+                                                snapshot.data[index].url),
+                                            builder: (context, openLink) {
+                                              return ElevatedButton(
+                                                onPressed: openLink,
+                                                child: const Text(
+                                                  'Read More',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                              Color>(
+                                                          Colors.blueGrey),
+                                                ),
+                                              );
+                                            }),
                                       ),
                                     ],
                                   ),
