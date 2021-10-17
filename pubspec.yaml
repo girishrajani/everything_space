@@ -39,6 +39,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   geocoding: ^2.0.1
   url_launcher: ^6.0.12
+  google_maps_flutter: ^2.0.11
 
 dev_dependencies:
   flutter_test:

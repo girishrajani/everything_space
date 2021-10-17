@@ -5,6 +5,9 @@ import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+void main() => runApp(ISS());
 
 class ISS extends StatelessWidget {
   const ISS({Key? key}) : super(key: key);
@@ -26,15 +29,9 @@ class IssScreen extends StatefulWidget {
 }
 
 class _IssScreenState extends State<IssScreen> {
-  final double _initFabHeight = 120.0;
-  double _fabHeight = 0;
-  double _panelHeightOpen = 0;
-  double _panelHeightClosed = 95.0;
   @override
   void initState() {
     super.initState();
-
-    _fabHeight = _initFabHeight;
   }
 
   final headLine =
@@ -66,10 +63,26 @@ class _IssScreenState extends State<IssScreen> {
           ),
           SlidingUpPanel(
             panelBuilder: (ScrollController sc) => _scrollingList(sc),
+            body: _body(),
             color: Colors.blueGrey,
           ),
         ],
       ),
+    );
+  }
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  Widget _body() {
+    return GoogleMap(
+      mapType: MapType.hybrid,
+      initialCameraPosition: _kGooglePlex,
+      // onMapCreated: (GoogleMapController controller) {
+      //   _controller.complete(controller);
+      // },
     );
   }
 
