@@ -1,6 +1,7 @@
 import 'package:everything_space/pages/apod.dart';
 import 'package:everything_space/pages/home.dart';
 import 'package:everything_space/pages/iss.dart';
+import 'package:everything_space/pages/james_webb.dart';
 import 'package:everything_space/pages/rover_images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/link.dart';
@@ -103,12 +104,12 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            // onTap: () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(builder: (context) => MarsRovers()),
-            //   );
-            // },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JamesWebb()),
+              );
+            },
             leading: const Icon(
               Icons.scatter_plot_rounded,
               color: Colors.white,
