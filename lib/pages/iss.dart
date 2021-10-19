@@ -1,11 +1,12 @@
 import 'dart:ui';
-
 import 'package:everything_space/api/iss_location_api.dart';
+import 'package:everything_space/models/iss_location_model.dart';
 import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_controller/google_maps_controller.dart';
 
 void main() => runApp(ISS());
 
@@ -29,17 +30,30 @@ class IssScreen extends StatefulWidget {
 }
 
 class _IssScreenState extends State<IssScreen> {
+  // GoogleMapsController _controller = GoogleMapsController();
+  late GoogleMapController _controller;
+  final Map<String, Marker> _markers = {};
+  // var lat, long;
   @override
   void initState() {
     super.initState();
+    // plotOnISSMap();
   }
+
+  // Future<void> plotOnISSMap() async {
+  //   List<IssData> _data = await GetIssData().getIssData();
+  //   var lat = double.parse(_data[0].lat);
+  //   var long = double.parse(_data[0].long);
+  //   LatLng latlng = LatLng(lat, long);
+  //   _controller.animateCamera(CameraUpdate.newCameraPosition(
+  //       new CameraPosition(bearing: 0, target: latlng, tilt: 0, zoom: 5.00)));
+  // }
 
   final headLine =
       'The International Space Station is moving at close to 28,000 km/h so its location changes really fast! Where is it right now?';
   var info =
       'The International Space Station is a modular space station in low Earth orbit. It is a multinational collaborative project involving five participating space agencies: NASA, Roscosmos, JAXA, ESA, and CSA. The ownership and use of the space station is established by intergovernmental treaties and agreements.';
 
-  void disableScrolling() {}
   PanelController _pc = PanelController();
   @override
   Widget build(BuildContext context) {
@@ -73,16 +87,59 @@ class _IssScreenState extends State<IssScreen> {
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    zoom: 5.4746,
   );
+
+  void _onMapCreated(GoogleMapController controller) async {
+    _controller = controller;
+    List<IssData> _data = await GetIssData().getIssData();
+    var lat = double.parse(_data[0].lat);
+    var long = double.parse(_data[0].long);
+    setState(() {
+      _markers.clear();
+
+      final marker = Marker(
+        markerId: const MarkerId('ISS'),
+        position: LatLng(lat, long),
+        infoWindow: const InfoWindow(
+          title: 'Internation Space Station',
+          // snippet: office.address,
+        ),
+      );
+      _markers['ISS'] = marker;
+    });
+  }
+
+  // void _markonMap() async {
+  //   List<IssData> _data = await GetIssData().getIssData();
+  //   var lat = double.parse(_data[0].lat);
+  //   var long = double.parse(_data[0].long);
+  //   print(lat);
+  //   print(long);
+  //   setState(() {
+  //     _markers.clear();
+
+  //     final marker = Marker(
+  //       markerId: MarkerId('ISS'),
+  //       position: LatLng(lat, long),
+  //       infoWindow: InfoWindow(
+  //         title: 'Internation Space Station',
+  //         // snippet: office.address,
+  //       ),
+  //     );
+  //     print(marker);
+  //     _markers['ISS'] = marker;
+
+  //     print('should be marked');
+  //   });
+  // }
 
   Widget _body() {
     return GoogleMap(
-      mapType: MapType.hybrid,
       initialCameraPosition: _kGooglePlex,
-      // onMapCreated: (GoogleMapController controller) {
-      //   _controller.complete(controller);
-      // },
+      onMapCreated: _onMapCreated,
+      // onCameraMoveStarted: _markonMap,
+      markers: _markers.values.toSet(),
     );
   }
 
@@ -151,6 +208,13 @@ class _IssScreenState extends State<IssScreen> {
                 ),
               );
             }
+            var lat = double.parse(snapshot.data[0].lat);
+            var long = double.parse(snapshot.data[0].long);
+            LatLng latlng = LatLng(lat, long);
+            _controller.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
+                    bearing: 0, target: latlng, tilt: 0, zoom: 3.00)));
+
             return SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Card(
@@ -164,35 +228,35 @@ class _IssScreenState extends State<IssScreen> {
                           'Current Location: ',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          snapshot.data[0].location,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text(
+                      //     snapshot.data[0].location,
+                      //     style: const TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 15,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      // ),
                       Text(
-                        'Latitude' + snapshot.data[0].lat,
+                        'Latitude: ' + snapshot.data[0].lat,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        'Longitude' + snapshot.data[0].long,
+                        'Longitude: ' + snapshot.data[0].long,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
