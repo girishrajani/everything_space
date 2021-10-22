@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:everything_space/api/apod_api.dart';
 import 'package:everything_space/theme/themes.dart';
 import 'package:everything_space/widgets/drawer.dart';
@@ -36,14 +37,20 @@ class _ApodScreenState extends State<ApodScreen> {
               future: GetApod().getApod(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
-                  return Container();
+                  return const Padding(
+                    padding: EdgeInsets.all(50.0),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                  );
                 }
                 if (snapshot.hasData == null) {
                   return const CircularProgressIndicator(
                     color: Colors.blueGrey,
                   );
                 }
-                print(snapshot.data);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -54,15 +61,27 @@ class _ApodScreenState extends State<ApodScreen> {
                       ),
                       child: Column(
                         children: [
-                          // Text('TEST'),
-                          // Text('TEST'),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                snapshot.data[0].imageUrl,
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                // height: 200.0,
+                                // width: MediaQuery.of(context).size.width - 20,
+                                placeholder: (context, url) => const Padding(
+                                  padding: EdgeInsets.all(35.0),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                                imageUrl: snapshot.data[0].imageUrl,
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                               ),
+                              // child: Image.network(
+                              //   snapshot.data[0].imageUrl,
+                              // ),
                             ),
                           ),
                           Padding(

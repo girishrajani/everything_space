@@ -63,12 +63,12 @@ class _IssScreenState extends State<IssScreen> {
         title: const Text('International Space Station'),
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.refresh,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: const Icon(
+      //     Icons.refresh,
+      //   ),
+      // ),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [

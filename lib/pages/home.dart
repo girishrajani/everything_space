@@ -66,7 +66,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         if (snapshot.connectionState != ConnectionState.done) {
-                          return Container();
+                          return const Padding(
+                            padding: EdgeInsets.all(50.0),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                          );
                         }
                         _childCount = 10;
                         return Card(
@@ -86,13 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fit: BoxFit.cover,
                                       height: 200.0,
                                       width: MediaQuery.of(context).size.width -
-                                          100,
+                                          20,
                                       placeholder: (context, url) =>
                                           const Padding(
                                         padding: EdgeInsets.all(35.0),
-                                        child: CircularProgressIndicator(
-                                          color: Colors.blueGrey,
-                                        ),
+                                        child: Icon(Icons.image),
                                       ),
                                       imageUrl: snapshot.data[index].imageUrl,
                                       errorWidget: (context, url, error) =>
@@ -113,7 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     snapshot.data[index].headline,
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),
