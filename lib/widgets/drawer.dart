@@ -3,6 +3,7 @@ import 'package:everything_space/pages/home.dart';
 import 'package:everything_space/pages/iss.dart';
 import 'package:everything_space/pages/james_webb.dart';
 import 'package:everything_space/pages/rover_images.dart';
+import 'package:everything_space/pages/tss.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,7 +78,7 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ISS()),
+                MaterialPageRoute(builder: (context) => Tss()),
               );
             },
             leading: const Icon(
