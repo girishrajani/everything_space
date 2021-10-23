@@ -1,4 +1,4 @@
-package com.example.everything_space
+package app.everything.space
 
 import io.flutter.embedding.android.FlutterActivity
 
