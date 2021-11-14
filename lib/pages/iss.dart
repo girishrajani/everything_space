@@ -40,21 +40,21 @@ class _IssScreenState extends State<IssScreen> {
     // plotOnISSMap();
   }
 
-  // Future<void> plotOnISSMap() async {
-  //   List<IssData> _data = await GetIssData().getIssData();
-  //   var lat = double.parse(_data[0].lat);
-  //   var long = double.parse(_data[0].long);
-  //   LatLng latlng = LatLng(lat, long);
-  //   _controller.animateCamera(CameraUpdate.newCameraPosition(
-  //       new CameraPosition(bearing: 0, target: latlng, tilt: 0, zoom: 5.00)));
-  // }
+  Future<void> plotOnISSMap() async {
+    List<IssData> _data = await GetIssData().getIssData();
+    var lat = double.parse(_data[0].lat);
+    var long = double.parse(_data[0].long);
+    print(lat);
+    print(long);
+    LatLng latlng = LatLng(lat, long);
+    _controller.animateCamera(CameraUpdate.newCameraPosition(
+        new CameraPosition(bearing: 0, target: latlng, tilt: 0, zoom: 1.00)));
+  }
 
   final headLine =
       'The International Space Station is moving at close to 28,000 km/h so its location changes really fast! Where is it right now?';
   var info =
       'The International Space Station is a modular space station in low Earth orbit. It is a multinational collaborative project involving five participating space agencies: NASA, Roscosmos, JAXA, ESA, and CSA. The ownership and use of the space station is established by intergovernmental treaties and agreements.';
-
-  PanelController _pc = PanelController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,12 +63,13 @@ class _IssScreenState extends State<IssScreen> {
         title: const Text('International Space Station'),
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   child: const Icon(
-      //     Icons.refresh,
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: plotOnISSMap,
+        backgroundColor: Colors.blueGrey,
+        child: const Icon(
+          Icons.refresh,
+        ),
+      ),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [

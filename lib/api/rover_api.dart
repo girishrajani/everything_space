@@ -5,7 +5,8 @@ import 'dart:convert' as convert;
 class GetRoverImages {
   Future<List<RoverModel>> getRoverImages() async {
     List<RoverModel> returnData = [];
-    const url = "";
+    const url =
+        "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=SEgrznW4xJTeQINODIKkXk3N3dOppLlrk3zss895";
     var requestURL = Uri.parse(url);
     var response = await http.get(requestURL);
     if (response.statusCode == 200) {

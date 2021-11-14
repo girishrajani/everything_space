@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 class GetApod {
   Future<List<ApodModel>> getApod() async {
-    const apiUrl = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
+    const apiUrl =
+        "https://api.nasa.gov/planetary/apod?api_key=SEgrznW4xJTeQINODIKkXk3N3dOppLlrk3zss895";
     var requestURL = Uri.parse(apiUrl);
     var jsonDecode;
     List<ApodModel> returnValue = [];
