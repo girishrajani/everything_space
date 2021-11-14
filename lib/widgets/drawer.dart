@@ -1,3 +1,4 @@
+import 'package:everything_space/pages/about.dart';
 import 'package:everything_space/pages/apod.dart';
 import 'package:everything_space/pages/home.dart';
 import 'package:everything_space/pages/iss.dart';
@@ -163,6 +164,21 @@ class AppDrawer extends StatelessWidget {
               color: Colors.white,
             ),
             title: const Text('Report a Problem'),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutApp()),
+              );
+            },
+            leading: const Icon(
+              Icons.info_outline_rounded,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'About',
+            ),
           ),
           const Padding(
             padding: EdgeInsets.all(20.0),

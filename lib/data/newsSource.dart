@@ -1,0 +1,2 @@
+var NewsInfo =
+    "This app uses an external source/third-party API for providing content like News. This app is not associated with the API Provider in any way. The Open-Source News API is listed below: \n Spaceflight News API (SNAPI) \n The News Provided by the API is just headlines from the articles provided by recognized News Sources. All the details about the News Providers and the API are available on their GitHub Page which is linked below.";
