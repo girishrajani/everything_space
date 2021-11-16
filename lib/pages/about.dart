@@ -188,7 +188,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
               ),
             ),
             subtitle: Text(
-              '1.0.1',
+              '1.0.1+2',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 9,

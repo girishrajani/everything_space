@@ -144,16 +144,16 @@ class AppDrawer extends StatelessWidget {
               'Contribute',
             ),
           ),
-          ListTile(
-            onTap: () {
-              _launchUrls("https://www.buymeacoffee.com/girishrajani");
-            },
-            leading: const Icon(
-              Icons.monetization_on,
-              color: Colors.white,
-            ),
-            title: const Text('Donate'),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     _launchUrls("https://www.buymeacoffee.com/girishrajani");
+          //   },
+          //   leading: const Icon(
+          //     Icons.monetization_on,
+          //     color: Colors.white,
+          //   ),
+          //   title: const Text('Donate'),
+          // ),
           ListTile(
             onTap: () {
               _launchUrls(
